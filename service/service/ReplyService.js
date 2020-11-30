@@ -29,7 +29,7 @@ exports.deleteReply = async function(id) {
     })
 }
 
-exports.findByPage = async function(page = 1, limit = 10, options = {}) {
+exports.findByPageReply = async function(page = 1, limit = 10, options = {}) {
     if (typeof options !== 'object') {
         throw new Error('配置参数错误！')
     }

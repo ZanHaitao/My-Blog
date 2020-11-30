@@ -44,6 +44,5 @@ exports.findByPageEveryDay = async function(page = 1, limit = 10) {
  */
 exports.getEveryDay = async function() {
     const result = await EveryDay.findAll();
-    result = JSON.parse(JSON.stringify(result));
     return result[Math.floor(Math.random() * result.length)];
 }

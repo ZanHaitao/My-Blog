@@ -29,12 +29,12 @@ exports.deleteComment = async function(id) {
     })
 }
 
-exports.findByPage = async function(page = 1, limit = 10, options = {}) {
+exports.findByPageComment = async function(page = 1, limit = 10, options = {}) {
     if (typeof options !== 'object') {
         throw new Error('配置参数错误！')
     }
 
-    options = pick(options, 'userName', 'email');
+    options = pick(options,'ArticleId', 'userName', 'email');
 
     const where = {};
 
@@ -46,6 +46,10 @@ exports.findByPage = async function(page = 1, limit = 10, options = {}) {
 
     if ('email' in options && options.email) {
         where.email = options.email;
+    }
+
+    if ('ArticleId' in options && options.ArticleId) {
+        where.ArticleId = options.ArticleId;
     }
 
     const result = await Comment.findAndCountAll({

@@ -56,8 +56,10 @@ exports.findByPageArticle = async function(page = 1, limit = 10, options = {}) {
     const where = {};
     const order = [];
 
-    if ('order' in options && Array.isArray(options.order)) {
-        order = options.order;
+    if ('order' in options && options.order != 0) {
+        order = [
+            ['browse','DESC']
+        ]
     }
 
     if ('title' in options && options.title) {

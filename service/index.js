@@ -1,8 +1,8 @@
 require('./models/init');
+require('./routes/init')
 
-
-const { kStringMaxLength } = require('buffer');
-const articleService = require('./service/ArticleService');
+// const { kStringMaxLength } = require('buffer');
+// const articleService = require('./service/ArticleService');
 
 // articleService.addArticle({
 //     title: '11',
