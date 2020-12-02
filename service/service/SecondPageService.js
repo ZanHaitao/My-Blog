@@ -28,9 +28,12 @@ exports.deleteSecondPage = async function(id) {
     })
 }
 
-exports.findAllSecondPage = async function() {
+exports.findSecondPage = async function(firstPageId = 0) {
     const result = await SecondPage.findAll({
-        include: FirstPage
+        include: FirstPage,
+        where: {
+            FirstPageId: +firstPageId
+        }
     });
     return JSON.parse(JSON.stringify(result));
 }
