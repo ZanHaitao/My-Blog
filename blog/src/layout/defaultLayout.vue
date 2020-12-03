@@ -4,6 +4,28 @@
             <div class="logo">
                 <img :src="config.logo" alt="">
             </div>
+            <div class="search">
+                <input placeholder="请输入关键词搜索" class="search-input" type="text">
+                <button class="search-btn el-icon-search"></button>
+            </div>
+            <div class="music">
+                <div class="music-img" :class="{ 'play': musicState}">
+                    <img src="https://img2.woyaogexing.com/2020/12/03/5c13113532a24ac1b3a32dff3366100e!400x400.jpeg" alt="">
+                </div>
+                <div class="music-tab">
+                    <p class="music-text">
+                        <span v-if="musicState">正在播放: </span>
+                        <span>Try-P!nk</span>
+                    </p>
+                    <p class="music-function">
+                        <span @click="changeMusic" class="last-btn el-icon-d-arrow-left"></span>
+                        <span @click="changeMusicState" v-if="musicState" class="pause-btn el-icon-video-pause"></span>
+                        <span @click="changeMusicState" v-else class="play-btn el-icon-video-play"></span>
+                        <span @click="changeMusic" class="next-btn el-icon-d-arrow-right"></span>
+                    </p>
+                </div>
+
+            </div>
             <div @click="showAside = !showAside" class="show-aside">
                 <span v-if="!showAside" class="el-icon-s-unfold"></span>
                 <span v-else class="el-icon-s-fold"></span>
@@ -31,14 +53,36 @@
                     <p class="btn">管理</p>
                 </div>
             </div>
-            <div class="content">content</div>
+            <div class="content">
+                <div class="left-content">
+
+                    <router-view />
+                    <div class="content-footer">
+                        <span>{{ config.service }}</span>
+                        <span>{{ config.record }}</span>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="content-tab">
+                        <content-tab />
+                    </div>
+                    <div class="blog-info">
+                        <blog-info />
+                    </div>
+                    <div class="label-content">
+                        <label-content />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import NavMenu from '../components/NavMenu';
-
+    import ContentTab from '../components/ContentTab';
+    import BlogInfo from '../components/BlogInfo';
+    import LabelContent from '../components/LabelContent';
     export default {
         data() {
             return {
@@ -46,11 +90,16 @@
                 userInfo: {},
                 pageList: [],
                 AritcleType: [],
-                showAside: false
+                showAside: false,
+                musicState: false,
+                audio: '',
             }
         },
         components: {
-            NavMenu
+            NavMenu,
+            ContentTab,
+            BlogInfo,
+            LabelContent,
         },
         async created() {
             this.config = await this.$api.getConfig();
@@ -72,6 +121,31 @@
                 active: false,
                 children: typeList
             }]
+
+        },
+        mounted() {
+            this.audio = new Audio();
+            this.audio.src = "http://music.163.com/song/media/outer/url?id=27515086.mp3";
+            this.audio.load();
+            this.audio.addEventListener("ended", () => {
+                this.audio.load();
+                this.audio.play();
+            });
+        },
+        methods: {
+            changeMusicState() {
+                this.musicState = !this.musicState;
+                if (!this.musicState) {
+                    this.audio.pause();
+                } else {
+                    this.audio.play();
+                }
+            },
+            changeMusic() {
+                this.audio.load();
+                this.musicState = true,
+                    this.audio.play();
+            }
         },
     }
 </script>
@@ -103,18 +177,121 @@
                 height: 40px;
             }
         }
+
+        .search {
+            float: left;
+            height: 50px;
+            line-height: 50px;
+
+            .search-input {
+                width: 150px;
+                box-sizing: border-box;
+                height: 32px;
+                border: none;
+                border-top-left-radius: 16px;
+                border-bottom-left-radius: 16px;
+                padding: 5px 10px 5px 15px;
+                outline: none;
+                font-size: 12px;
+                border: solid 2px #fff;
+                transition: border .5s;
+                color: #777;
+
+                &:hover {
+                    background: #E0E6ED;
+                }
+
+                &:focus {
+                    border: solid 2px #C6D8F5;
+                    background: #fff;
+                }
+            }
+
+            .search-btn {
+                height: 32px;
+                width: 36px;
+                background-color: #fff;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 16px;
+                text-align: left;
+                vertical-align: middle;
+                border-top-right-radius: 16px;
+                border-bottom-right-radius: 16px;
+            }
+        }
+
+        .music {
+            height: 50px;
+            float: right;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 50px;
+
+            .music-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 2px solid #fff;
+                margin-right: 10px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &.play {
+                    animation: play 2s linear infinite;
+                }
+
+                @keyframes play {
+                    0% {
+                        transform: rotateZ(0deg);
+                    }
+
+                    100% {
+                        transform: rotateZ(360deg);
+                    }
+                }
+            }
+
+            .music-function {
+                margin-left: 10px;
+                width: 120px;
+                display: flex;
+                justify-content: space-around;
+                font-size: 14px;
+
+                span {
+                    cursor: pointer;
+                }
+            }
+
+            .music-text {
+                font-size: 12px;
+                color: #777;
+                margin-bottom: 7px;
+                text-align: center;
+            }
+        }
     }
 
     .container {
         margin-top: 50px;
+        box-shadow: 0 0px 4px 1px rgba(0, 0, 0, .05);
+        overflow: hidden;
 
         .aside {
             width: 220px;
             position: fixed;
             height: calc(100% - 50px);
             background: #F9F9F9;
-            box-shadow: -1px 0px 4px 1px rgba(0, 0, 0, .05);
             overflow-y: scroll;
+            z-index: 998;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -181,6 +358,7 @@
                 text-align: center;
                 color: #777;
                 cursor: pointer;
+                box-shadow: 0 -1px 1px rgba(0, 0, 0, .05), 0 0 0 rgba(0, 0, 0, .05);
 
                 .icon {
                     margin: 6px 0;
@@ -195,7 +373,38 @@
         .content {
             width: calc(100% - 220px);
             float: right;
-            height: 3000px;
+            overflow: hidden;
+            position: relative;
+
+            .left-content {
+                width: 840px;
+                min-height: 1200px;
+                position: relative;
+                padding-bottom: 50px;
+                background: #F1F3F4;
+
+                .content-footer {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                    font-size: 14px;
+                    color: #777;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 20px;
+                }
+            }
+
+            .right-content {
+                position: absolute;
+                background-color: #F9F9F9;
+                width: calc(100% - 840px);
+                top: 0;
+                bottom: 0;
+                right: 0;
+                overflow: hidden;
+            }
         }
     }
 
@@ -203,8 +412,6 @@
         .wrapper {
             width: 1300px;
             margin: 0 auto;
-
-
         }
     }
 
@@ -212,6 +419,20 @@
         .wrapper {
             width: 1170px;
             margin: 0 auto;
+
+            .header {
+                width: 1170px;
+            }
+
+            .container>.content {
+                .left-content {
+                    width: 710px;
+                }
+
+                .right-content {
+                    width: calc(100% - 710px);
+                }
+            }
         }
     }
 
@@ -219,13 +440,20 @@
         .wrapper {
             width: 970px;
             margin: 0 auto;
-        }
-    }
 
-    @media screen and (max-width:992px) and (min-width:768px) {
-        .wrapper {
-            width: 970px;
-            margin: 0 auto;
+            .header {
+                width: 970px;
+            }
+
+            .container>.content {
+                .left-content {
+                    width: 510px;
+                }
+
+                .right-content {
+                    width: calc(100% - 510px);
+                }
+            }
         }
     }
 
@@ -233,6 +461,20 @@
         .wrapper {
             width: 750px;
             margin: 0 auto;
+
+            .header {
+                width: 750px;
+            }
+
+            .container>.content {
+                .left-content {
+                    width: 100%;
+                }
+
+                .right-content {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -255,13 +497,21 @@
                     transform: translateY(-50%);
                     font-size: 26px;
                 }
+
+                .search{
+                    display: none;
+                }
+
+                .music{
+                    display: none;
+                }
             }
 
             .aside {
                 transition: left .5s;
                 left: -100%;
 
-                &.aside-active{
+                &.aside-active {
                     left: 0;
                 }
             }
@@ -269,6 +519,16 @@
             .content {
                 float: left;
                 width: 100%;
+
+
+                .left-content {
+                    width: 100%;
+                }
+
+                .right-content {
+                    display: none;
+                }
+
             }
         }
     }

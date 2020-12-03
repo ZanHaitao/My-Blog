@@ -54,8 +54,7 @@ exports.findByPageArticle = async function(page = 1, limit = 10, options = {}) {
     options = pick(options, 'title', 'UserId', 'ArticleTypeId', 'LabelId', 'order');
 
     const where = {};
-    const order = [];
-
+    let order = [];
     if ('order' in options && options.order != 0) {
         order = [
             ['browse','DESC']

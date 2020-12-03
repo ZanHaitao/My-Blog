@@ -14,7 +14,7 @@ module.exports = sequelize.define('Article', {
         allowNull: false
     },
     browse: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     isComment: {

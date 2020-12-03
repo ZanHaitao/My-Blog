@@ -62,4 +62,63 @@ export default {
     async deleteAritcleType(id) {
         return await axios().delete('/api/aritcleType/' + id);
     },
+    async getOnceEveryDay(){
+        return await axios().get('/api/everyDay/once')
+    },
+    async getEveryDayList(){
+        return await axios().get('/api/everyDay')
+    },
+    async addEveryDay(options) {
+        return await axios().post('/api/everyDay', options);
+    },
+    async updateEveryDay(id, options) {
+        return await axios().put('/api/everyDay/' + id, options);
+    },
+    async deleteEveryDay(id) {
+        return await axios().delete('/api/everyDay/' + id);
+    },
+    async getAritcleList(options){
+        return await axios().get('/api/aritcle',{
+            params:{
+                ...options
+            }
+        })
+    },
+    async addAritcle(options) {
+        return await axios().post('/api/aritcle', options);
+    },
+    async updateAritcle(id, options) {
+        return await axios().put('/api/aritcle/' + id, options);
+    },
+    async deleteAritcle(id) {
+        return await axios().delete('/api/aritcle/' + id);
+    },
+    async getCommentList(options){
+        return await axios().get('/api/comment',{
+            params:{
+                ...options
+            }
+        })
+    },
+    async addComment(options) {
+        return await axios().post('/api/comment', options);
+    },
+    async updateComment(id, options) {
+        return await axios().put('/api/comment/' + id, options);
+    },
+    async deleteComment(id) {
+        return await axios().delete('/api/comment/' + id);
+    },
+    async getLabelList(){
+        return await axios().get('/api/label');
+    },
+    async addLabel(options) {
+        return await axios().post('/api/label', options);
+    },
+    async updateLabel(id, options) {
+        return await axios().put('/api/label/' + id, options);
+    },
+    async deleteLabel(id) {
+        return await axios().delete('/api/label/' + id);
+    },
 }

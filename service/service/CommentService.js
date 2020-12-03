@@ -34,9 +34,15 @@ exports.findByPageComment = async function(page = 1, limit = 10, options = {}) {
         throw new Error('配置参数错误！')
     }
 
-    options = pick(options,'ArticleId', 'userName', 'email');
+    options = pick(options, 'ArticleId', 'userName', 'email', 'order');
 
     const where = {};
+    let order = [];
+    if ('order' in options && options.order != 0) {
+        order = [
+            ['id', 'DESC']
+        ]
+    }
 
     if ('userName' in options && options.userName) {
         where.userName = {
@@ -56,7 +62,8 @@ exports.findByPageComment = async function(page = 1, limit = 10, options = {}) {
         where,
         offset: (page - 1) * limit,
         limit: +limit,
-        include: Article
+        include: Article,
+        order,
     });
 
     return {

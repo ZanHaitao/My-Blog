@@ -10,11 +10,13 @@ router.get('/', asyncHandler(async (req, res) => {
     const userName = req.query.userName || "";
     const email = req.query.email || "";
     const ArticleId = req.query.ArticleId || "";
+    const order = req.query.order || 0;
 
     return await CommentService.findByPageComment(page, limit, {
         userName,
         email,
-        ArticleId
+        ArticleId,
+        order
     })
 }))
 
