@@ -12,12 +12,14 @@ router.get('/', asyncHandler(async (req, res) => {
     const ArticleTypeId = req.query.ArticleTypeId || "";
     const LabelId = req.query.LabelId || "";
     const order = req.query.order || 0;
+    const isTop = req.query.isTop || 0;
     return await ArticleService.findByPageArticle(page, limit, {
         title,
         UserId,
         ArticleTypeId,
         LabelId,
-        order
+        order,
+        isTop
     })
 }))
 

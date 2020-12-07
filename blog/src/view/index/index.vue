@@ -4,16 +4,23 @@
             <p class="title">{{ config.title }}</p>
             <p class="every-day">{{ everyDay.content }}</p>
         </div>
+        <div class="article-content">
+            <article-list />
+        </div>
     </div>
 </template>
 
 <script>
+    import ArticleList from '@/components/ArticleList';
     export default {
         data() {
             return {
-                config:{},
-                everyDay:{}
+                config: {},
+                everyDay: {}
             }
+        },
+        components: {
+            ArticleList,
         },
         async created() {
             this.config = await this.$api.getConfig();

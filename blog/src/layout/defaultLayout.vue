@@ -10,7 +10,7 @@
             </div>
             <div class="music">
                 <div class="music-img" :class="{ 'play': musicState}">
-                    <img src="https://img2.woyaogexing.com/2020/12/03/5c13113532a24ac1b3a32dff3366100e!400x400.jpeg" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1892204807,2455024704&fm=26&gp=0.jpg" alt="">
                 </div>
                 <div class="music-tab">
                     <p class="music-text">
@@ -53,9 +53,8 @@
                     <p class="btn">管理</p>
                 </div>
             </div>
-            <div class="content">
+            <div class="content" :class="{'content-hide':showAside}" @click="changeAside">
                 <div class="left-content">
-
                     <router-view />
                     <div class="content-footer">
                         <span>{{ config.service }}</span>
@@ -125,7 +124,7 @@
         },
         mounted() {
             this.audio = new Audio();
-            this.audio.src = "http://music.163.com/song/media/outer/url?id=27515086.mp3";
+            this.audio.src = "http://antiserver.kuwo.cn/anti.s?useless=/resource/&format=mp3&rid=MUSIC_3189432&response=res&type=convert_url&";
             this.audio.load();
             this.audio.addEventListener("ended", () => {
                 this.audio.load();
@@ -145,6 +144,11 @@
                 this.audio.load();
                 this.musicState = true,
                     this.audio.play();
+            },
+            changeAside(){
+                if(this.showAside){
+                    this.showAside = false;
+                }
             }
         },
     }
@@ -303,9 +307,9 @@
 
             .aside-user {
                 width: 100%;
-                height: 190px;
+                height: 210px;
                 text-align: center;
-                padding: 20px 0 0;
+                padding: 30px 0 0;
                 box-sizing: border-box;
                 cursor: pointer;
 
@@ -316,6 +320,10 @@
                     .user-name {
                         color: #999;
                     }
+
+                    .user-portrait{
+                        transform: rotateZ(360deg);
+                    }
                 }
 
                 .user-portrait {
@@ -325,6 +333,8 @@
                     overflow: hidden;
                     margin: 0 auto 10px;
                     box-shadow: 2px 2px 3px #e1e1e1;
+                    transition: transform 1s;
+                    border: 2px solid #fff;
 
                     img {
                         width: 100%;
@@ -469,6 +479,7 @@
             .container>.content {
                 .left-content {
                     width: 100%;
+                    min-height: 500px;
                 }
 
                 .right-content {
@@ -519,10 +530,25 @@
             .content {
                 float: left;
                 width: 100%;
-
+                position: relative;
+                transition: margin .5s;
+                &.content-hide{
+                    margin-left: 220px;
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        bottom: 0;
+                        background: rgba(0, 0, 0, .5);
+                        z-index: 99;
+                    }
+                }
 
                 .left-content {
                     width: 100%;
+                    min-height: 500px;
                 }
 
                 .right-content {

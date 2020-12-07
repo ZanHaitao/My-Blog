@@ -36,7 +36,7 @@
         },
         async created() {
             this.aritcleList = (await this.$api.getAritcleList({
-                order: 1,
+                order: 'browse',
                 limit: 5
             })).data;
 

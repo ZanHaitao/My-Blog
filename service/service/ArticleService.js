@@ -51,14 +51,21 @@ exports.findByPageArticle = async function(page = 1, limit = 10, options = {}) {
     if (typeof options !== 'object') {
         throw new Error('配置参数错误！')
     }
-    options = pick(options, 'title', 'UserId', 'ArticleTypeId', 'LabelId', 'order');
+    options = pick(options, 'title', 'UserId', 'ArticleTypeId', 'LabelId', 'order','isTop');
 
     const where = {};
     let order = [];
-    if ('order' in options && options.order != 0) {
-        order = [
-            ['browse','DESC']
-        ]
+    if ('order' in options && options.order) {
+        if (options.order === 'browse') {
+            order = [
+                ['browse', 'DESC']
+            ]
+        } else {
+            order = [
+                ['id', 'DESC']
+            ]
+        }
+
     }
 
     if ('title' in options && options.title) {
@@ -77,6 +84,10 @@ exports.findByPageArticle = async function(page = 1, limit = 10, options = {}) {
 
     if ('LabelId' in options && options.LabelId) {
         where.LabelId = options.LabelId;
+    }
+
+    if ('isTop' in options && options.isTop) {
+        where.isTop = 1;
     }
 
     const result = await Article.findAndCountAll({
