@@ -42,16 +42,16 @@
                 </div>
                 <div class="aside-nav">
                     <template v-if="pageList.length != 0">
-                        <nav-menu class="border" :title="'导航'" :listData="pageList" />
+                        <nav-menu class="border" :title="'导航'" :type="'首页'" :listData="pageList" />
                     </template>
                     <template v-if="AritcleType.length != 0">
-                        <nav-menu :title="'组成'" :listData="AritcleType" />
+                        <nav-menu :title="'组成'" :type="''" :listData="AritcleType" />
                     </template>
                 </div>
-                <div class="aside-footer">
+                <router-link tag="div" to="/admin" class="aside-footer">
                     <p class="icon el-icon-setting"></p>
                     <p class="btn">管理</p>
-                </div>
+                </router-link>
             </div>
             <div class="content" :class="{'content-hide':showAside}" @click="changeAside">
                 <div class="left-content">

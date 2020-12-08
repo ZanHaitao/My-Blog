@@ -2,6 +2,9 @@
     <div class="nav-bar">
         <div class="nav-title">{{ title }}</div>
         <ul>
+            <li class="nav-item" v-if="type == '首页'">
+                <router-link tag="span" to="/index" class="item-title">首页</router-link>
+            </li>
             <li class="nav-item" v-for="item in listData" :key="item.id">
                 <span class="item-title" @click="clickItem(item)">
                     {{item.title}}
@@ -32,17 +35,21 @@
             listData: {
                 type: Array,
                 required: true
+            },
+            type: {
+                type: String,
+                required: true
             }
         },
         methods: {
             clickItem(item) {
                 if (item.children.length != 0 && item.active == false) {
                     item.active = true;
-                }else{
+                } else {
                     item.active = false;
                 }
 
-                if(item.children.length === 0){
+                if (item.children.length === 0) {
                     console.log('111')
                 }
             }
@@ -64,6 +71,7 @@
 
         .nav-item {
             -webkit-user-select: none;
+
             .item-title {
                 padding: 15px 0px 15px 50px;
                 color: #777777;

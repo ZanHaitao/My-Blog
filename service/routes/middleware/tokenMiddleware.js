@@ -17,7 +17,6 @@ module.exports = (req, res, next) => {
     }
 
     const result = jwt.verify(req);
-
     if (result) {
         req.token = {}
         req.token.UserInfo = {

@@ -28,7 +28,11 @@ router.post('/whoami', asyncHandler(async (req, res) => {
     if (req.token.UserInfo) {
         const info = req.token.UserInfo;
         const result = await UserService.loginUser(info.loginId, info.loginPwd);
-        return result;
+        if (result) {
+            return result;
+        }else{
+            res.status(403).send(null);
+        }
     } else {
         res.send(null);
         return;

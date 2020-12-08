@@ -13,10 +13,6 @@ module.exports = sequelize.define('Config', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    icon: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     service: {
         type: DataTypes.STRING,
         allowNull: false

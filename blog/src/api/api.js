@@ -2,7 +2,7 @@ import axios from '../http/http';
 
 export default {
     async userLogin(loginId, loginPwd) {
-        return await axios.post('/api/user/login', {
+        return await axios().post('/api/user/login', {
             loginId,
             loginPwd
         })
@@ -20,7 +20,7 @@ export default {
         return await axios().get('/api/config')
     },
     async updateConfig(options) {
-        return await axios.put('/api/config', options)
+        return await axios().put('/api/config', options)
     },
     async getFirstPageList() {
         return await axios().get('/api/firstPage');

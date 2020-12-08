@@ -14,6 +14,7 @@ export default function() {
             return response.data
         }
     },err=>{
+        document.cookie = `Token='';path=/;expires=-1`;
         return Promise.reject(err);
     });
 
