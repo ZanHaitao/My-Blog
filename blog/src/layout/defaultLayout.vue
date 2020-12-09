@@ -104,12 +104,13 @@
             this.config = await this.$api.getConfig();
             this.userInfo = await this.$api.getUser();
 
-            const pageArr = await this.$api.getFirstPageList();
+            const pageArr = (await this.$api.getPageList({
+                limit: 9999
+            })).data;
 
             pageArr.forEach(async (item, index) => {
                 pageArr[index].children = [];
-                pageArr[index].active = false;
-                pageArr[index].children = await this.$api.getSecondPageList(item.id);
+                pageArr[index].title = item.pageName;
             })
 
             this.pageList = pageArr;
@@ -145,8 +146,8 @@
                 this.musicState = true,
                     this.audio.play();
             },
-            changeAside(){
-                if(this.showAside){
+            changeAside() {
+                if (this.showAside) {
                     this.showAside = false;
                 }
             }
@@ -321,7 +322,7 @@
                         color: #999;
                     }
 
-                    .user-portrait{
+                    .user-portrait {
                         transform: rotateZ(360deg);
                     }
                 }
@@ -509,11 +510,11 @@
                     font-size: 26px;
                 }
 
-                .search{
+                .search {
                     display: none;
                 }
 
-                .music{
+                .music {
                     display: none;
                 }
             }
@@ -532,9 +533,11 @@
                 width: 100%;
                 position: relative;
                 transition: margin .5s;
-                &.content-hide{
+
+                &.content-hide {
                     margin-left: 220px;
-                    &::after{
+
+                    &::after {
                         content: '';
                         position: absolute;
                         left: 0;

@@ -2,8 +2,6 @@ const User = require('./table/User');
 const Article = require('./table/Article');
 const Comment = require('./table/Comment');
 const Reply = require('./table/Reply');
-const FirstPage = require('./table/FirstPage');
-const SecondPage = require('./table/SecondPage');
 const ArticleType = require('./table/ArticleType');
 const Label = require('./table/Label');
 
@@ -36,10 +34,4 @@ Comment.belongsTo(Article);
  */
 Comment.hasMany(Reply);
 Reply.belongsTo(Comment);
-
-/**
- * 一级页面与二级页面关系
- */
-FirstPage.hasMany(SecondPage);
-SecondPage.belongsTo(FirstPage);
 

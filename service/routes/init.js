@@ -41,11 +41,9 @@ app.use('/api/aritcleType',require('./api/AritcleTypeRouter'));
 app.use('/api/comment',require('./api/CommentRouter'));
 app.use('/api/config',require('./api/ConfigRouter'));
 app.use('/api/everyDay',require('./api/EveryDayRouter'));
-app.use('/api/firstPage',require('./api/FirstPageRouter'));
 app.use('/api/label',require('./api/LabelRouter'));
 app.use('/api/page',require('./api/PageRouter'));
 app.use('/api/reply',require('./api/ReplyRouter'));
-app.use('/api/secondPage',require('./api/SecondPageRouter'));
 app.use('/api/user',require('./api/UserRouter'));
 
 // 处理报错中间件

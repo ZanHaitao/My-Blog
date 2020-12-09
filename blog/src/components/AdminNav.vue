@@ -12,7 +12,7 @@
                 撰写
                 <ul>
                     <router-link tag="li" to="/admin/publishArticle">撰写文章</router-link>
-                    <li>创建页面</li>
+                    <router-link tag="li" to="/admin/publishPage">创建页面</router-link>
                 </ul>
             </li>
             <li>
@@ -29,7 +29,7 @@
             <router-link to="/admin/config" tag="li">设置</router-link>
         </ul>
         <ul>
-            <li>{{$store.state.loginUser.userName}}</li>
+            <router-link to="/admin/userinfo" tag="li">{{$store.state.loginUser.userName}}</router-link>
             <li @click="loginOut">登出</li>
             <router-link to="/" tag="li">网站</router-link>
         </ul>

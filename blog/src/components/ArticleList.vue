@@ -13,7 +13,7 @@
                     </div>
                     <div class="article-text">
                         <p class="article-title">{{ item.title }}</p>
-                        <p class="article-content" v-html="item.content"></p>
+                        <p class="article-content" v-html="replaceMarked(item.content)"></p>
                     </div>
                     <div class="article-img" :class="{'right':index%2 == 0}" v-if="index%2 == 0" :style="{'background-image':'url('+item.cover+')'}">
                     </div>
@@ -38,6 +38,7 @@
 <script>
     import moment from 'moment';
     import MyPagination from '@/components/Pagination';
+    import marked from 'marked';
 
     export default {
         data() {
@@ -90,6 +91,9 @@
                         clearInterval(timeTop);
                     }
                 }, 10);
+            },
+            replaceMarked(content){
+                return marked(content)
             }
         },
         watch: {

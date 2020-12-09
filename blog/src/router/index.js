@@ -40,6 +40,10 @@ const routes = [{
         path: 'publishArticle',
         name: 'publishArticle',
         component: () => import('../view/admin/publishArticle.vue')
+    }, {
+        path: 'publishPage',
+        name: 'publishPage',
+        component: () => import('../view/admin/publishPage.vue')
     }]
 }]
 

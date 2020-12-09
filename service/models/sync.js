@@ -2,8 +2,6 @@ require('./table/User');
 require('./table/Article');
 require('./table/Comment');
 require('./table/Reply');
-require('./table/FirstPage');
-require('./table/SecondPage');
 require('./table/ArticleType');
 require('./table/Label');
 require('./table/Page');

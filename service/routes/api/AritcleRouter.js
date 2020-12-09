@@ -29,6 +29,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }))
 
 router.post('/', asyncHandler(async (req, res) => {
+    console.log(req.body);
     return await ArticleService.addArticle(req.body);
 }))
 
