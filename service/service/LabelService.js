@@ -32,3 +32,14 @@ exports.getLabelList = async function() {
     const result = await Label.findAll();
     return JSON.parse(JSON.stringify(result))
 }
+
+exports.findByPageLabel = async function(page = 1, limit = 10) {
+    const result = await Label.findAndCountAll({
+        offset: (page - 1) * limit,
+        limit: +limit
+    })
+    return {
+        count: result.count,
+        data: JSON.parse(JSON.stringify(result.rows))
+    }
+}

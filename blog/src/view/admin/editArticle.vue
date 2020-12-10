@@ -1,7 +1,7 @@
 <template>
     <div class="publish-article">
         <div class="tip" v-show="showMessage">{{ message }}</div>
-        <div class="publish-article-title">撰写新文章</div>
+        <div class="publish-article-title">编辑文章</div>
         <div class="putlish-article-content">
             <div class="left-content">
                 <text-content :title="title" :content="content" :cover="cover" @publishArticle="changeArticle" />
@@ -51,7 +51,8 @@
                 isComment: true,
                 isTop: false,
                 message: '',
-                showMessage: false
+                showMessage: false,
+                editData: {}
             }
         },
         components: {
@@ -63,7 +64,19 @@
                     this.$router.push({ name: 'login' });
                 }
             }, 1000)
-            
+            if (this.$route.params.data) {
+                const result = this.$route.params.data;
+                this.editData = result;
+                this.title = result.title;
+                this.content = result.content;
+                this.cover = result.cover;
+                this.selectType = result.ArticleType;
+                this.selectLabel = result.Label;
+                this.isComment = result.isComment ? true : false;
+                this.isTop = result.isTop ? true : false;
+            } else {
+                this.$router.push('/admin/articleManage');
+            }
             this.articleTypeList = await this.$api.getAritcleTypeList();
             this.labelList = await this.$api.getLabelList();
         },
@@ -75,7 +88,7 @@
             },
             async publishArticle() {
                 if (this.title != "" && this.content != "" && this.cover != "" && this.selectLabel != "" && this.selectType != "") {
-                    const result = await this.$api.addAritcle({
+                    const result = await this.$api.updateAritcle(this.editData.id, {
                         title: this.title,
                         content: this.content,
                         cover: this.cover,

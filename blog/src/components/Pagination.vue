@@ -13,7 +13,7 @@
             <span v-if="page + 2 != maxPage" @click="changePage(page + 2)">{{page + 2}}</span>
         </template>
         <span v-if="page + 3 < maxPage">...</span>
-        <span :class="{'active':page == maxPage}" @click="changePage(maxPage)">{{ maxPage }}</span>
+        <span :class="{'active':page == maxPage}" @click="changePage(maxPage)" v-if="maxPage != 1">{{ maxPage }}</span>
         <span v-if="page < maxPage - 3" class="icon el-icon-arrow-right" @click="changePage(page + 1)"></span>
     </div>
 </template>
@@ -40,8 +40,8 @@
             }
         },
         methods: {
-            changePage(page){
-                this.$emit('changePage',page);
+            changePage(page) {
+                this.$emit('changePage', page);
             }
         },
     }
@@ -64,7 +64,8 @@
             &.active {
                 background-color: #000;
                 color: #fff;
-                &:hover{
+
+                &:hover {
                     background: #000;
                 }
             }

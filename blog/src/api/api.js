@@ -25,6 +25,13 @@ export default {
     async getAritcleTypeList() {
         return await axios().get('/api/aritcleType');
     },
+    async getAritcleTypeFindByPage(options){
+        return await axios().get('/api/aritcleType/list',{
+            params:{
+                ...options
+            }
+        })
+    },
     async addAritcleType(options) {
         return await axios().post('/api/aritcleType', options);
     },
@@ -37,8 +44,12 @@ export default {
     async getOnceEveryDay() {
         return await axios().get('/api/everyDay/once')
     },
-    async getEveryDayList() {
-        return await axios().get('/api/everyDay')
+    async getEveryDayList(options) {
+        return await axios().get('/api/everyDay',{
+            params:{
+                ...options
+            }
+        })
     },
     async addEveryDay(options) {
         return await axios().post('/api/everyDay', options);
@@ -84,6 +95,13 @@ export default {
     async getLabelList() {
         return await axios().get('/api/label');
     },
+    async getLabelFindByPage(options){
+        return await axios().get('/api/label/list',{
+            params:{
+                ...options
+            }
+        })
+    },
     async addLabel(options) {
         return await axios().post('/api/label', options);
     },
@@ -108,5 +126,21 @@ export default {
     },
     async deletePage(id) {
         return await axios().delete('/api/page/' + id);
+    },
+    async getReply(options) {
+        return await axios().get('/api/reply', {
+            params: {
+                ...options
+            }
+        })
+    },
+    async addReply(options) {
+        return await axios().post('/api/reply', options);
+    },
+    async updateReply(id, options) {
+        return await axios().put('/api/reply/' + id, options);
+    },
+    async deleteReply(id) {
+        return await axios().delete('/api/reply/' + id);
     },
 }

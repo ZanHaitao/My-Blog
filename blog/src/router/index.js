@@ -44,6 +44,38 @@ const routes = [{
         path: 'publishPage',
         name: 'publishPage',
         component: () => import('../view/admin/publishPage.vue')
+    }, {
+        path: 'articleManage',
+        name: 'articleManage',
+        component: () => import('../view/admin/articleManage.vue')
+    }, {
+        path: 'pageManage',
+        name: 'pageManage',
+        component: () => import('../view/admin/pageManage.vue')
+    }, {
+        path: 'typeManage',
+        name: 'typeManage',
+        component: () => import('../view/admin/typeManage.vue')
+    }, {
+        path: 'labelManage',
+        name: 'labelManage',
+        component: () => import('../view/admin/labelManage.vue')
+    }, {
+        path: 'everyDayManage',
+        name: 'everyDayManage',
+        component: () => import('../view/admin/everyDayManage.vue')
+    }, {
+        path: 'commentManage',
+        name: 'commentManage',
+        component: () => import('../view/admin/commentManage.vue')
+    }, {
+        path: 'editArticle',
+        name: 'editArticle',
+        component: () => import('../view/admin/editArticle.vue')
+    }, {
+        path: 'editPage',
+        name: 'editPage',
+        component: () => import('../view/admin/editPage.vue')
     }]
 }]
 

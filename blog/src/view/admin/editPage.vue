@@ -28,7 +28,8 @@
                 message: '',
                 showMessage: false,
                 pageName: '',
-                describe: ''
+                describe: '',
+                editData: ''
             }
         },
         components: {
@@ -40,6 +41,18 @@
                     this.$router.push({ name: 'login' });
                 }
             }, 1000)
+
+            if (this.$route.params.data) {
+                const result = this.$route.params.data;
+                this.editData = result;
+                this.title = result.title;
+                this.content = result.content;
+                this.cover = result.cover;
+                this.pageName = result.pageName;
+                this.describe = result.describe;
+            } else {
+                this.$router.push('/admin/pageManage');
+            }
         },
         methods: {
             changePage(data) {
@@ -49,7 +62,7 @@
             },
             async publishArticle() {
                 if (this.title != "" && this.content != "" && this.cover != "" && this.pageName != "" && this.describe != "") {
-                    const result = await this.$api.addPage({
+                    const result = await this.$api.updatePage(this.editData.id, {
                         title: this.title,
                         content: this.content,
                         cover: this.cover,

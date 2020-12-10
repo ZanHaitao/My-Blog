@@ -32,3 +32,14 @@ exports.getAritcleTypeList = async function() {
     const result = await AritcleType.findAll();
     return JSON.parse(JSON.stringify(result))
 }
+
+exports.findByPageAritcleType = async function(page = 1, limit = 10) {
+    const result = await AritcleType.findAndCountAll({
+        offset: (page - 1) * limit,
+        limit: +limit
+    })
+    return {
+        count: result.count,
+        data: JSON.parse(JSON.stringify(result.rows))
+    }
+}

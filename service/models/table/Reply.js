@@ -16,6 +16,10 @@ module.exports = sequelize.define('Reply', {
     email: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     createdAt: true,

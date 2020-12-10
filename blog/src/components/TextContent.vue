@@ -137,7 +137,6 @@
             input {
                 height: 36px;
                 width: 100%;
-                font-weight: bold;
                 padding: 0 10px;
                 box-sizing: border-box;
                 border: 1px solid #D9D9D6;

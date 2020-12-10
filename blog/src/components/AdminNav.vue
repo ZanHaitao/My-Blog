@@ -18,12 +18,12 @@
             <li>
                 管理
                 <ul>
-                    <li>文章</li>
-                    <li>独立页面</li>
-                    <li>评论</li>
-                    <li>分类</li>
-                    <li>标签</li>
-                    <li>每日一句</li>
+                    <router-link tag="li" to="/admin/articleManage">文章</router-link>
+                    <router-link tag="li" to="/admin/pageManage">独立页面</router-link>
+                    <router-link tag="li" to="/admin/commentManage">评论</router-link>
+                    <router-link tag="li" to="/admin/typeManage">分类</router-link>
+                    <router-link tag="li" to="/admin/labelManage">标签</router-link>
+                    <router-link tag="li" to="/admin/everyDayManage">每日一句</router-link>
                 </ul>
             </li>
             <router-link to="/admin/config" tag="li">设置</router-link>

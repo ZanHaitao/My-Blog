@@ -8,6 +8,12 @@ router.get('/', asyncHandler(async (req, res) => {
     return await LabelService.getLabelList();
 }))
 
+router.get('/list', asyncHandler(async (req, res) => {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    return await LabelService.findByPageLabel(page, limit);
+}))
+
 router.post('/', asyncHandler(async (req, res) => {
     return await LabelService.addLabel(req.body)
 }))
