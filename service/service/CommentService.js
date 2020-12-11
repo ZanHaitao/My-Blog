@@ -7,13 +7,13 @@ const { pick } = require('../util/propertayHelper');
 const { Op } = require("sequelize");
 
 exports.addComment = async function(options) {
-    options = pick(options, 'userName', 'email', 'content');
+    options = pick(options, 'userName', 'email', 'content','ArticleId');
     const result = await Comment.create(options);
     return result.toJSON();
 }
 
 exports.updateComment = async function(id, options) {
-    options = pick(options, 'userName', 'email', 'content');
+    options = pick(options, 'userName', 'email', 'content','ArticleId');
     return await Comment.update(options, {
         where: {
             id,

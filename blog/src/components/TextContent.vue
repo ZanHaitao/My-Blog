@@ -8,10 +8,10 @@
                 <li @click="appendText('**加粗文字**')" class="iconfont icon-bold" title="加粗"></li>
                 <li @click="appendText('*斜体文字*')" class="iconfont icon-xieti" title="斜体"></li>
                 <li @click="appendText('\n> 引用文字')" class="iconfont icon-yinyong" title="引用"></li>
-                <li @click="appendText('\n```javascript\n\n代码片段\n\n```')" class="iconfont icon-ai-code" title="代码"></li>
+                <li @click="appendText('\n```javascript\n\n代码片段\n\n```\n')" class="iconfont icon-ai-code" title="代码"></li>
                 <li @click="appendText('\n![avatar](图片链接地址)\n')" class="iconfont icon-tupian" title="图片"></li>
-                <li @click="appendText('\n 1. 列表项目\n')" class="iconfont icon-numberlist" title="有序列表"></li>
-                <li @click="appendText('\n - 列表项目\n')" class="iconfont icon-liebiao" title="无序列表"></li>
+                <li @click="appendText('\n 1. 列表项目')" class="iconfont icon-numberlist" title="有序列表"></li>
+                <li @click="appendText('\n - 列表项目')" class="iconfont icon-liebiao" title="无序列表"></li>
                 <li @click="appendText('\n## 标题文字 ##\n')" class="iconfont icon-biaoti" title="标题"></li>
                 <li @click="appendText('\n----------\n')" class="iconfont icon-fengexian1" title="分割线"></li>
                 <li @click="appendText('\n<!--more-->\n')" class="iconfont icon-fengexian" title="摘要分割线"></li>

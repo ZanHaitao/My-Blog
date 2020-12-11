@@ -56,6 +56,9 @@ exports.findByPageReply = async function(page = 1, limit = 10, options = {}) {
         where,
         offset: (page - 1) * limit,
         limit: +limit,
+        order: [
+            ['id', 'DESC']
+        ],
         include: Comment
     });
 

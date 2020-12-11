@@ -26,7 +26,7 @@ module.exports = sequelize.define('Article', {
         allowNull: false
     },
     cover: {
-        type: DataTypes.STRING(1000),
+        type: DataTypes.STRING(2000),
         allowNull: true
     }
 }, {

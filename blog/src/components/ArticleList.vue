@@ -1,22 +1,24 @@
 <template>
     <div class="article-list">
-        <div class="article-top" :style="{'background-image':'url('+articleTopData.cover+')'}">
+        <router-link :to="{name:'articleDetail',params:{id:articleTopData.id}}" tag="div" class="article-top" :style="{'background-image':'url('+articleTopData.cover+')'}">
             <div class="top-detail">
                 <p class="top-title"><span class="tip">置顶</span>{{ articleTopData.title }}</p>
                 <p class="top-content">{{ articleTopData.content }}</p>
             </div>
-        </div>
+        </router-link>
         <ul>
             <li class="article-item" v-for="(item,index) in articleData.data" :key="item.id">
                 <div class="article-info">
-                    <div class="article-img" :class="{'left':index%2 != 0}" v-if="index%2 != 0" :style="{'background-image':'url('+item.cover+')'}">
-                    </div>
+                    <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'left':index%2 != 0}" v-if="index%2 != 0" :style="{'background-image':'url('+item.cover+')'}">
+                    </router-link>
                     <div class="article-text">
-                        <p class="article-title">{{ item.title }}</p>
-                        <p class="article-content" v-html="replaceMarked(item.content)"></p>
+                        <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="p" class="article-title">{{ item.title }}</router-link>
+                        <p class="article-content">
+                            {{replaceMarked(item.content)}}
+                        </p>
                     </div>
-                    <div class="article-img" :class="{'right':index%2 == 0}" v-if="index%2 == 0" :style="{'background-image':'url('+item.cover+')'}">
-                    </div>
+                    <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'right':index%2 == 0}" v-if="index%2 == 0" :style="{'background-image':'url('+item.cover+')'}">
+                    </router-link>
                 </div>
                 <div class="article-publish">
                     <span class="icon el-icon-user"></span>
@@ -92,8 +94,14 @@
                     }
                 }, 10);
             },
-            replaceMarked(content){
-                return marked(content)
+            replaceMarked(content) {
+                const str = marked(content);
+                const reg = /\<[^>]*\>(([^<])*)/g;
+                const result = str.replace(reg, function() {
+                    let mark = "";
+                    return arguments[1];
+                });
+                return result;
             }
         },
         watch: {
@@ -107,6 +115,81 @@
 <style lang="scss">
     .article-list {
         padding: 20px;
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #a0a0a0;
+        }
+
+        .hljs,
+        .hljs-tag,
+        .hljs-subst {
+            color: #a0a0a0;
+        }
+
+        .hljs-strong,
+        .hljs-emphasis {
+            color: #a0a0a0;
+        }
+
+        .hljs-bullet,
+        .hljs-quote,
+        .hljs-number,
+        .hljs-regexp,
+        .hljs-literal,
+        .hljs-link {
+            color: #a0a0a0;
+        }
+
+        .hljs-code,
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-class {
+            color: #a0a0a0;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-name,
+        .hljs-attr {
+            color: #a0a0a0;
+        }
+
+        .hljs-symbol,
+        .hljs-attribute {
+            color: #a0a0a0;
+        }
+
+        .hljs-params,
+        .hljs-class .hljs-title {
+            color: #a0a0a0;
+        }
+
+        .hljs-string,
+        .hljs-type,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-selector-id,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo,
+        .hljs-addition,
+        .hljs-variable,
+        .hljs-template-variable {
+            color: #a0a0a0;
+        }
+
+        .hljs-comment,
+        .hljs-deletion,
+        .hljs-meta {
+            color: #a0a0a0;
+        }
+
+
+        &>ul {
+            padding: 0;
+        }
 
         .article-top {
             margin-bottom: 20px;
@@ -210,7 +293,7 @@
 
                 .article-content {
                     font-size: 14px;
-                    color: #a0a0a0;
+                    color: #a0a0a0 !important;
                     line-height: 30px;
                     overflow: hidden;
                     text-overflow: ellipsis;

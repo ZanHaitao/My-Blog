@@ -25,9 +25,9 @@ export default {
     async getAritcleTypeList() {
         return await axios().get('/api/aritcleType');
     },
-    async getAritcleTypeFindByPage(options){
-        return await axios().get('/api/aritcleType/list',{
-            params:{
+    async getAritcleTypeFindByPage(options) {
+        return await axios().get('/api/aritcleType/list', {
+            params: {
                 ...options
             }
         })
@@ -45,8 +45,8 @@ export default {
         return await axios().get('/api/everyDay/once')
     },
     async getEveryDayList(options) {
-        return await axios().get('/api/everyDay',{
-            params:{
+        return await axios().get('/api/everyDay', {
+            params: {
                 ...options
             }
         })
@@ -66,6 +66,9 @@ export default {
                 ...options
             }
         })
+    },
+    async getArticle(id) {
+        return await axios().get('/api/aritcle/' + id);
     },
     async addAritcle(options) {
         return await axios().post('/api/aritcle', options);
@@ -95,9 +98,9 @@ export default {
     async getLabelList() {
         return await axios().get('/api/label');
     },
-    async getLabelFindByPage(options){
-        return await axios().get('/api/label/list',{
-            params:{
+    async getLabelFindByPage(options) {
+        return await axios().get('/api/label/list', {
+            params: {
                 ...options
             }
         })

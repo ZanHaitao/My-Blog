@@ -25,12 +25,11 @@
         async created() {
             this.config = await this.$api.getConfig();
             this.everyDay = await this.$api.getOnceEveryDay();
-
         },
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .content-header {
         height: 120px;
         width: 100%;

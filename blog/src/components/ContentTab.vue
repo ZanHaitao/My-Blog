@@ -9,9 +9,15 @@
         <div class="tab-list">
             <dl v-if="currentSelect === 1">
                 <dt class="list-title">热门文章</dt>
-                <dd v-for="item in aritcleList" :key="item.id">
-                    <p class="title">{{ item.title }}</p>
-                    <p class="text"><span class="el-icon-view icon"></span><span>{{ item.browse }}</span></p>
+                <dd v-for="(item,index) in aritcleList" :key="item.id">
+                    <div class="img">
+                        <img :src="imgArr[index]" alt="">
+                    </div>
+                    <div class="right">
+                        <p class="title" @click="handelClick(item)">{{ item.title }}</p>
+                        <p class="text"><span class="el-icon-view icon"></span><span>{{ item.browse }}</span></p>
+                    </div>
+
                 </dd>
             </dl>
             <dl v-else class="tab-comment">
@@ -31,7 +37,14 @@
             return {
                 currentSelect: 1,
                 aritcleList: [],
-                commentList: []
+                commentList: [],
+                imgArr: [
+                    'https://cdn.jsdelivr.net/gh/ihewro/blog@master/usr/themes/handsome/assets/img/sj2/2.jpg',
+                    'https://cdn.jsdelivr.net/gh/ihewro/blog@master/usr/themes/handsome/assets/img/sj2/3.jpg',
+                    'https://cdn.jsdelivr.net/gh/ihewro/blog@master/usr/themes/handsome/assets/img/sj2/9.jpg',
+                    'https://cdn.jsdelivr.net/gh/ihewro/blog@master/usr/themes/handsome/assets/img/sj2/6.jpg',
+                    'https://cdn.jsdelivr.net/gh/ihewro/blog@master/usr/themes/handsome/assets/img/sj2/10.jpg'
+                ]
             }
         },
         async created() {
@@ -44,6 +57,11 @@
                 order: 1,
                 limit: 5
             })).data;
+        },
+        methods: {
+            handelClick(item) {
+                this.$router.push({ name: 'articleDetail', params: { id: item.id } })
+            }
         },
     }
 </script>
@@ -82,9 +100,29 @@
             dd {
                 padding: 10px 20px;
                 cursor: pointer;
+                overflow: hidden;
 
                 &:hover {
                     background: #ECECEC;
+                }
+
+                .img{
+                    width: 40px;
+                    height: 40px;
+                    float: left;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+                    overflow: hidden;
+                }
+
+                .right{
+                    float: left;
+                    width: calc(100% - 55px);
+                    margin-left: 15px;
                 }
 
                 .title {

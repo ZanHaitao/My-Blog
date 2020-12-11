@@ -1,9 +1,9 @@
 <template>
     <div class="wrapper">
         <header class="header">
-            <div class="logo">
+            <router-link to="/" tag="div" class="logo">
                 <img :src="config.logo" alt="">
-            </div>
+            </router-link>
             <div class="search">
                 <input placeholder="请输入关键词搜索" class="search-input" type="text">
                 <button class="search-btn el-icon-search"></button>
@@ -34,9 +34,9 @@
         <div class="container">
             <div class="aside" :class="{'aside-active':showAside}">
                 <div class="aside-user border">
-                    <p class="user-portrait">
+                    <router-link tag="p" to="/" class="user-portrait">
                         <img :src="userInfo.userPortrait" alt="">
-                    </p>
+                    </router-link>
                     <p class="user-name">{{ userInfo.userName }}</p>
                     <p class="user-info">{{ userInfo.userInfo }}</p>
                 </div>
@@ -176,6 +176,7 @@
             height: 50px;
             display: flex;
             justify-content: center;
+            cursor: pointer;
 
             img {
                 width: 130px;

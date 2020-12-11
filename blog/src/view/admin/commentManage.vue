@@ -21,7 +21,7 @@
             return {
                 message: '',
                 showMessage: false,
-                commentData: {},
+                commentData: "",
                 page: 1,
                 limit: 10
             }

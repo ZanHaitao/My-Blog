@@ -14,6 +14,10 @@ const routes = [{
         path: 'index',
         name: 'index',
         component: () => import('../view/index/index.vue')
+    },{
+        path: 'articleDetail/:id',
+        name: 'articleDetail',
+        component: () => import('../view/index/articleDetail.vue')
     }]
 }, {
     path: '/admin',

@@ -59,7 +59,7 @@
                     if (result) {
                         this.sendMessage("发布成功！");
                         setTimeout(() => {
-                            window.location.reload();
+                            this.$router.push('/admin/pageManage');
                         }, 3000)
                     } else {
                         this.sendMessage("发布失败，请检查后再提交！")
