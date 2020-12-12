@@ -4,10 +4,6 @@
             <router-link to="/" tag="div" class="logo">
                 <img :src="config.logo" alt="">
             </router-link>
-            <div class="search">
-                <input placeholder="请输入关键词搜索" class="search-input" type="text">
-                <button class="search-btn el-icon-search"></button>
-            </div>
             <div class="music">
                 <div class="music-img" :class="{ 'play': musicState}">
                     <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1892204807,2455024704&fm=26&gp=0.jpg" alt="">
@@ -31,7 +27,7 @@
                 <span v-else class="el-icon-s-fold"></span>
             </div>
         </header>
-        <div class="container">
+        <div class="container" :class="{'loading':$store.state.loading}">
             <div class="aside" :class="{'aside-active':showAside}">
                 <div class="aside-user border">
                     <router-link tag="p" to="/" class="user-portrait">
@@ -42,7 +38,7 @@
                 </div>
                 <div class="aside-nav">
                     <template v-if="pageList.length != 0">
-                        <nav-menu class="border" :title="'导航'" :type="'首页'" :listData="pageList" />
+                        <nav-menu class="border" :title="'导航'" :type="'独立页面'" :listData="pageList" />
                     </template>
                     <template v-if="AritcleType.length != 0">
                         <nav-menu :title="'组成'" :type="''" :listData="AritcleType" />
@@ -184,51 +180,6 @@
             }
         }
 
-        .search {
-            float: left;
-            height: 50px;
-            line-height: 50px;
-
-            .search-input {
-                width: 150px;
-                box-sizing: border-box;
-                height: 32px;
-                border: none;
-                border-top-left-radius: 16px;
-                border-bottom-left-radius: 16px;
-                padding: 5px 10px 5px 15px;
-                outline: none;
-                font-size: 12px;
-                border: solid 2px #fff;
-                transition: border .5s;
-                color: #777;
-
-                &:hover {
-                    background: #E0E6ED;
-                }
-
-                &:focus {
-                    border: solid 2px #C6D8F5;
-                    background: #fff;
-                }
-            }
-
-            .search-btn {
-                height: 32px;
-                width: 36px;
-                background-color: #fff;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 16px;
-                text-align: left;
-                vertical-align: middle;
-                border-top-right-radius: 16px;
-                border-bottom-right-radius: 16px;
-            }
-        }
-
         .music {
             height: 50px;
             float: right;
@@ -290,6 +241,39 @@
         margin-top: 50px;
         box-shadow: 0 0px 4px 1px rgba(0, 0, 0, .05);
         overflow: hidden;
+        position: relative;
+
+        &.loading::after{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 3px;
+
+            animation: loading 5s linear infinite alternate;
+            
+            @keyframes loading {
+                0%{
+                    background: rgb(19, 178, 241);
+                }
+                20%{
+                    background: green;
+                }
+                40%{
+                    background: yellow;
+                }
+                60%{
+                    background: red;
+                }
+                80%{
+                    background: orchid;
+                }
+                100%{
+                    background: paleturquoise;
+                }
+            }
+        }
 
         .aside {
             width: 220px;
@@ -509,10 +493,6 @@
                     top: 50%;
                     transform: translateY(-50%);
                     font-size: 26px;
-                }
-
-                .search {
-                    display: none;
                 }
 
                 .music {

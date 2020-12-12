@@ -121,6 +121,9 @@ export default {
             }
         })
     },
+    async getPageById(id) {
+        return await axios().get('/api/page/' + id);
+    },
     async addPage(options) {
         return await axios().post('/api/page', options);
     },

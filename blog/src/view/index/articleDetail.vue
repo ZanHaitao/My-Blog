@@ -1,128 +1,131 @@
 <template>
     <div class="article-detail">
-        <div class="message-tip" :class="{'active':showMessage}">{{ message }}</div>
-        <div class="publish-tip" :class="{'show':showPublishTip}">
-            <div class="title">发表评论</div>
-            <p class="must">评论</p>
-            <p class="text-content">
-                <textarea placeholder="评论内容(必填)" v-model="replyContent"></textarea>
-            </p>
-            <div class="input-content">
-                <div>
-                    <p class="must">名称</p>
-                    <p><input type="text" placeholder="姓名或昵称(必填)" v-model="replyUserName"></p>
-                </div>
-                <div>
-                    <p class="must">邮箱</p>
-                    <p><input type="text" placeholder="邮箱(必填)" v-model="replyEmail"></p>
-                </div>
-            </div>
-            <p class="btn">
-                <button @click="publishReply">发表评论</button>
-                <button class="cancel" @click="cancelPublishReply">取消</button>
-            </p>
-        </div>
-        <div class="article-detail-header">
-            <template v-if="articleData">
-                <p class="title"># {{ articleData.title }}</p>
-                <p class="info">
-                    <span class="icon el-icon-user"></span>
-                    <span class="text">{{ articleData.User.userName }}</span>
-                    <span class="icon el-icon-time"></span>
-                    <span class="text">{{ getDate(articleData.createdAt) }}</span>
-                    <span class="icon el-icon-chat-square"></span>
-                    <span class="text" v-if="articleData.isComment">{{ articleData.commentCount ? articleData.commentCount : '暂无评论' }}</span>
-                    <span class="text" v-else>关闭评论</span>
-                    <span class="icon el-icon-view"></span>
-                    <span class="text">{{ articleData.browse }}次浏览</span>
-                    <span class="icon el-icon-collection-tag"></span>
-                    <span class="text">{{ articleData.ArticleType.title }}</span>
-                    <span class="icon el-icon-sugar"></span>
-                    <span class="text">{{ articleData.Label.title }}</span>
+        <template v-if="articleData">
+            <div class="message-tip" :class="{'active':showMessage}">{{ message }}</div>
+            <div class="publish-tip" :class="{'show':showPublishTip}">
+                <div class="title">发表评论</div>
+                <p class="must">评论</p>
+                <p class="text-content">
+                    <textarea placeholder="评论内容(必填)" v-model="replyContent"></textarea>
                 </p>
-            </template>
-        </div>
-        <div class="article-detail-content">
-            <div class="article-content-header">
-                <span class="icon el-icon-house"></span>
-                <router-link to="/" tag="span" class="btn" title="返回首页">首页</router-link>
-                <span>/</span>
-                <span>正文</span>
-            </div>
-            <template v-if="articleData">
-                <markdown-content :contentData="articleData"></markdown-content>
-            </template>
-
-            <div class="article-content-footer">
-                <template v-if="articleData.isComment">
-                    <p class="title">{{articleData.commentCount}}条评论</p>
-
-                    <ul class="comment-content">
-                        <template v-if="commentData.data">
-                            <li class="tip" v-if="commentData.data.length === 0">
-                                暂无评论
-                            </li>
-                        </template>
-
-                        <li v-for="item in commentData.data" :key="item.id">
-                            <div class="portrait" v-once :style="{'background-image':'url('+getPortrait()+')'}">
-                            </div>
-                            <div class="info">
-                                <p class="user-name">{{ item.userName }}</p>
-                                <p class="date">{{ getDate(item.createdAt) }}</p>
-                                <p class="comment-text" :title="item.content">{{ item.content }}</p>
-                                <p class="btn">
-                                    <button @click="handleReply(item)">回复</button>
-                                </p>
-                                <ul>
-                                    <li v-for="reply in item.Reply" :key="reply.id" class="reply">
-                                        <div class="portrait" v-once :style="{'background-image':`url(${reply.type === 'admin' ? articleData.User.userPortrait : getPortrait()})`}">
-                                        </div>
-                                        <div class="info">
-                                            <p class="user-name" :class="{ 'blogger': reply.type === 'admin' }" :title="reply.type === 'admin' ? '博主':''">{{ reply.userName }}</p>
-                                            <p class="date">{{ getDate(reply.createdAt) }}</p>
-                                            <p class="comment-text" :title="reply.content">{{ reply.content }}</p>
-                                            <p class="btn">
-                                                <button @click="handleReply(item)">回复</button>
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </template>
-                <template v-else>
-                    <div class="tip">此文章评论已关闭</div>
-                </template>
-            </div>
-            <template v-if="commentData.count && articleData.isComment && (commentData.count / limit) > 1">
-                <my-pagination :page="page" :limit="limit" :count="commentData.count" @changePage="changePage" />
-            </template>
-
-            <template v-if="articleData.isComment">
-                <div class="publish-comment">
-                    <div class="title">发表评论</div>
-                    <p class="must">评论</p>
-                    <p class="text-content">
-                        <textarea placeholder="评论内容(必填)" v-model="commentContent"></textarea>
-                    </p>
-                    <div class="input-content">
-                        <div>
-                            <p class="must">名称</p>
-                            <p><input type="text" placeholder="姓名或昵称(必填)" v-model="userName"></p>
-                        </div>
-                        <div>
-                            <p class="must">邮箱</p>
-                            <p><input type="text" placeholder="邮箱(必填)" v-model="email"></p>
-                        </div>
+                <div class="input-content">
+                    <div>
+                        <p class="must">名称</p>
+                        <p><input type="text" placeholder="姓名或昵称(必填)" v-model="replyUserName"></p>
                     </div>
-                    <p class="btn">
-                        <button @click="publishComment">发表评论</button>
-                    </p>
+                    <div>
+                        <p class="must">邮箱</p>
+                        <p><input type="text" placeholder="邮箱(必填)" v-model="replyEmail"></p>
+                    </div>
                 </div>
-            </template>
-        </div>
+                <p class="btn">
+                    <button @click="publishReply">发表评论</button>
+                    <button class="cancel" @click="cancelPublishReply">取消</button>
+                </p>
+            </div>
+            <div class="article-detail-header">
+                <template v-if="articleData">
+                    <p class="title"># {{ articleData.title }}</p>
+                    <p class="info">
+                        <span class="icon el-icon-user"></span>
+                        <span class="text">{{ articleData.User.userName }}</span>
+                        <span class="icon el-icon-time"></span>
+                        <span class="text">{{ getDate(articleData.createdAt) }}</span>
+                        <span class="icon el-icon-chat-square"></span>
+                        <span class="text" v-if="articleData.isComment">{{ articleData.commentCount ? articleData.commentCount : '暂无评论' }}</span>
+                        <span class="text" v-else>关闭评论</span>
+                        <span class="icon el-icon-view"></span>
+                        <span class="text">{{ articleData.browse }}次浏览</span>
+                        <span class="icon el-icon-collection-tag"></span>
+                        <span class="text">{{ articleData.ArticleType.title }}</span>
+                        <span class="icon el-icon-sugar"></span>
+                        <span class="text">{{ articleData.Label.title }}</span>
+                    </p>
+                </template>
+            </div>
+            <div class="article-detail-content">
+                <div class="article-content-header">
+                    <span class="icon el-icon-house"></span>
+                    <router-link to="/" tag="span" class="btn" title="返回首页">首页</router-link>
+                    <span>/</span>
+                    <span>正文</span>
+                </div>
+                <template v-if="articleData">
+                    <markdown-content :contentData="articleData"></markdown-content>
+                </template>
+
+                <div class="article-content-footer">
+                    <template v-if="articleData.isComment">
+                        <p class="title">{{articleData.commentCount}}条评论</p>
+
+                        <ul class="comment-content">
+                            <template v-if="commentData.data">
+                                <li class="tip" v-if="commentData.data.length === 0">
+                                    暂无评论
+                                </li>
+                            </template>
+
+                            <li v-for="item in commentData.data" :key="item.id">
+                                <div class="portrait" v-once :style="{'background-image':'url('+getPortrait()+')'}">
+                                </div>
+                                <div class="info">
+                                    <p class="user-name">{{ item.userName }}</p>
+                                    <p class="date">{{ getDate(item.createdAt) }}</p>
+                                    <p class="comment-text" :title="item.content">{{ item.content }}</p>
+                                    <p class="btn">
+                                        <button @click="handleReply(item)">回复</button>
+                                    </p>
+                                    <ul>
+                                        <li v-for="reply in item.Reply" :key="reply.id" class="reply">
+                                            <div class="portrait" v-once :style="{'background-image':`url(${reply.type === 'admin' ? articleData.User.userPortrait : getPortrait()})`}">
+                                            </div>
+                                            <div class="info">
+                                                <p class="user-name" :class="{ 'blogger': reply.type === 'admin' }" :title="reply.type === 'admin' ? '博主':''">{{ reply.userName }}</p>
+                                                <p class="date">{{ getDate(reply.createdAt) }}</p>
+                                                <p class="comment-text" :title="reply.content">{{ reply.content }}</p>
+                                                <p class="btn">
+                                                    <button @click="handleReply(item)">回复</button>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </template>
+                    <template v-else>
+                        <div class="tip">此文章评论已关闭</div>
+                    </template>
+                </div>
+                <template v-if="commentData.count && articleData.isComment && (commentData.count / limit) > 1">
+                    <my-pagination :page="page" :limit="limit" :count="commentData.count" @changePage="changePage" />
+                </template>
+
+                <template v-if="articleData.isComment">
+                    <div class="publish-comment">
+                        <div class="title">发表评论</div>
+                        <p class="must">评论</p>
+                        <p class="text-content">
+                            <textarea placeholder="评论内容(必填)" v-model="commentContent"></textarea>
+                        </p>
+                        <div class="input-content">
+                            <div>
+                                <p class="must">名称</p>
+                                <p><input type="text" placeholder="姓名或昵称(必填)" v-model="userName"></p>
+                            </div>
+                            <div>
+                                <p class="must">邮箱</p>
+                                <p><input type="text" placeholder="邮箱(必填)" v-model="email"></p>
+                            </div>
+                        </div>
+                        <p class="btn">
+                            <button @click="publishComment">发表评论</button>
+                        </p>
+                    </div>
+                </template>
+            </div>
+        </template>
+
     </div>
 </template>
 
@@ -170,8 +173,10 @@
         },
         methods: {
             async getData() {
+                this.$store.dispatch('changeLoading', true);
                 this.articleData = await this.$api.getArticle(this.$route.params.id);
                 this.getComment();
+                this.$store.dispatch('changeLoading', false);
             },
             async publishReply() {
                 if (this.replyContent != "" && this.replyUserName != "" && this.replyEmail != "") {
@@ -453,6 +458,9 @@
             font-weight: 300;
             font-size: 30px;
             padding: 15px 0 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .info {

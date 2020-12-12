@@ -5,7 +5,7 @@
             <p class="every-day">{{ everyDay.content }}</p>
         </div>
         <div class="article-content">
-            <article-list />
+            <article-list :pageType="'首页'" :type="''" :label="''" />
         </div>
     </div>
 </template>

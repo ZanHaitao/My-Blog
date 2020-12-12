@@ -28,6 +28,15 @@ exports.deletePage = async function(id) {
     })
 }
 
+exports.findByIdPage = async function(id) {
+    const result = await Page.findByPk(id)
+
+    if (result) {
+        return result.toJSON();
+    }
+
+    return null;
+}
 
 exports.findByPagePage = async function(page = 1, limit = 10, pageName = "") {
 

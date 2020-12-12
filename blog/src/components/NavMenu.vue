@@ -2,20 +2,29 @@
     <div class="nav-bar">
         <div class="nav-title">{{ title }}</div>
         <ul>
-            <li class="nav-item" v-if="type == '首页'">
+            <li class="nav-item" v-if="type == '独立页面'">
                 <router-link tag="span" to="/index" class="item-title">首页</router-link>
             </li>
             <li class="nav-item" v-for="item in listData" :key="item.id">
-                <span class="item-title" @click="clickItem(item)">
-                    {{item.title}}
-                    <span v-if="item.children.length != 0 && item.active == false" class="icon el-icon-arrow-right"></span>
-                    <span v-if="item.children.length != 0 && item.active == true" class="icon el-icon-arrow-down"></span>
-                </span>
+                <template v-if="type == '独立页面'">
+                    <router-link :to="{name:'pageDetail',params:{id:item.id}}" tag="span" class="item-title">
+                        {{item.title}}
+                    </router-link>
+                </template>
+
+                <template v-else>
+                    <span class="item-title" @click="clickItem(item)">
+                        {{item.title}}
+                        <span v-if="item.children.length != 0 && item.active == false" class="icon el-icon-arrow-right"></span>
+                        <span v-if="item.children.length != 0 && item.active == true" class="icon el-icon-arrow-down"></span>
+                    </span>
+                </template>
+
 
                 <template v-if="item.active == true">
                     <ul>
                         <li class="show-item" v-for="page in item.children" :key="page.id">
-                            <span class="item-title">{{ page.title }}</span>
+                            <router-link tag="span" :to="{name:'filterArticleType',params:{id:page.id}}" class="item-title">{{ page.title }}</router-link>
                         </li>
                     </ul>
                 </template>
@@ -47,10 +56,6 @@
                     item.active = true;
                 } else {
                     item.active = false;
-                }
-
-                if (item.children.length === 0) {
-                    console.log('111')
                 }
             }
         },

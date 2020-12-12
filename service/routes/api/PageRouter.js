@@ -11,6 +11,10 @@ router.get('/', asyncHandler(async (req, res) => {
     return await PageService.findByPagePage(page, limit, pageName);
 }))
 
+router.get('/:id', asyncHandler(async (req, res) => {
+    return await PageService.findByIdPage(req.params.id);
+}))
+
 router.post('/', asyncHandler(async (req, res) => {
     return await PageService.addPage(req.body)
 }))

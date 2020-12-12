@@ -1,38 +1,47 @@
 <template>
     <div class="article-list">
-        <router-link :to="{name:'articleDetail',params:{id:articleTopData.id}}" tag="div" class="article-top" :style="{'background-image':'url('+articleTopData.cover+')'}">
-            <div class="top-detail">
-                <p class="top-title"><span class="tip">置顶</span>{{ articleTopData.title }}</p>
-                <p class="top-content">{{ articleTopData.content }}</p>
-            </div>
-        </router-link>
-        <ul>
-            <li class="article-item" v-for="(item,index) in articleData.data" :key="item.id">
-                <div class="article-info">
-                    <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'left':index%2 != 0}" v-if="index%2 != 0" :style="{'background-image':'url('+item.cover+')'}">
-                    </router-link>
-                    <div class="article-text">
-                        <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="p" class="article-title">{{ item.title }}</router-link>
-                        <p class="article-content">
-                            {{replaceMarked(item.content)}}
-                        </p>
+        <template v-if="articleData">
+            <template v-if="pageType === '首页'">
+                <router-link :to="{name:'articleDetail',params:{id:articleTopData.id}}" tag="div" class="article-top" :style="{'background-image':'url('+articleTopData.cover+')'}">
+                    <div class="top-detail">
+                        <p class="top-title"><span class="tip">置顶</span>{{ articleTopData.title }}</p>
+                        <p class="top-content">{{ articleTopData.content }}</p>
                     </div>
-                    <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'right':index%2 == 0}" v-if="index%2 == 0" :style="{'background-image':'url('+item.cover+')'}">
-                    </router-link>
+                </router-link>
+            </template>
+            <template v-if="articleData.data.length == 0">
+                <div class="list-tip">
+                    暂无文章
                 </div>
-                <div class="article-publish">
-                    <span class="icon el-icon-user"></span>
-                    <span class="text">{{ item.User.userName }}</span>
-                    <span class="icon el-icon-time"></span>
-                    <span class="text">{{ getDate(item.createdAt) }}</span>
-                    <span class="icon el-icon-chat-square"></span>
-                    <span class="text" v-if="item.isComment">{{ item.commentCount ? item.commentCount : '暂无评论' }}</span>
-                    <span class="text" v-else>关闭评论</span>
-                </div>
-            </li>
-        </ul>
-        <template v-if="articleData.count">
-            <my-pagination :page="page" :limit="limit" :count="articleData.count" @changePage="changePage" />
+            </template>
+            <ul>
+                <li class="article-item" v-for="(item,index) in articleData.data" :key="item.id">
+                    <div class="article-info">
+                        <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'left':index%2 != 0}" v-if="index%2 != 0" :style="{'background-image':'url('+item.cover+')'}">
+                        </router-link>
+                        <div class="article-text">
+                            <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="p" class="article-title">{{ item.title }}</router-link>
+                            <p class="article-content">
+                                {{replaceMarked(item.content)}}
+                            </p>
+                        </div>
+                        <router-link :to="{name:'articleDetail',params:{id:item.id}}" tag="div" class="article-img" :class="{'right':index%2 == 0}" v-if="index%2 == 0" :style="{'background-image':'url('+item.cover+')'}">
+                        </router-link>
+                    </div>
+                    <div class="article-publish">
+                        <span class="icon el-icon-user"></span>
+                        <span class="text">{{ item.User.userName }}</span>
+                        <span class="icon el-icon-time"></span>
+                        <span class="text">{{ getDate(item.createdAt) }}</span>
+                        <span class="icon el-icon-chat-square"></span>
+                        <span class="text" v-if="item.isComment">{{ item.commentCount ? item.commentCount : '暂无评论' }}</span>
+                        <span class="text" v-else>关闭评论</span>
+                    </div>
+                </li>
+            </ul>
+            <template v-if="articleData.count">
+                <my-pagination :page="page" :limit="limit" :count="articleData.count" @changePage="changePage" />
+            </template>
         </template>
     </div>
 </template>
@@ -43,9 +52,23 @@
     import marked from 'marked';
 
     export default {
+        props: {
+            pageType: {
+                type: String,
+                required: true
+            },
+            type: {
+                type: String,
+                required: true
+            },
+            label: {
+                type: String,
+                required: true
+            }
+        },
         data() {
             return {
-                articleData: {},
+                articleData: '',
                 page: 1,
                 limit: 5,
                 articleTopData: {}
@@ -56,11 +79,12 @@
         },
         async created() {
             this.getData();
-
-            this.articleTopData = (await this.$api.getAritcleList({
-                limit: 1,
-                isTop: 1
-            })).data[0];
+            if (this.pageType === '首页') {
+                this.articleTopData = (await this.$api.getAritcleList({
+                    limit: 1,
+                    isTop: 1
+                })).data[0];
+            }
         },
         methods: {
             getDate(date) {
@@ -70,10 +94,19 @@
                 this.page = page;
             },
             async getData() {
+                this.$store.dispatch('changeLoading', true);
                 this.goTop();
+                let where = {};
+                if(this.type != ""){
+                    where.ArticleTypeId = this.type;
+                }
+                if(this.label != ""){
+                    where.LabelId = this.label;
+                }
                 this.articleData = await this.$api.getAritcleList({
                     page: this.page,
                     limit: this.limit,
+                    ...where,
                     order: 1
                 });
 
@@ -84,6 +117,7 @@
                         this.$set(item, 'commentCount', res.count)
                     })
                 })
+                this.$store.dispatch('changeLoading', false);
             },
             goTop() {
                 let top = document.documentElement.scrollTop || document.body.scrollTop;
@@ -107,12 +141,25 @@
         watch: {
             page() {
                 this.getData();
+            },
+            type(){
+                this.getData();
+            },
+            label(){
+                this.getData();
             }
         },
     }
 </script>
 
 <style lang="scss">
+
+    .list-tip{
+        text-align: center;
+        color: #555;
+        margin-top: 50px;
+    }
+
     .article-list {
         padding: 20px;
 

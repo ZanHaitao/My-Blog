@@ -12,7 +12,7 @@ app.listen(port, () => {
 });
 
 //处理单页面中间件
-// app.use(history());
+app.use(history());
 
 //处理静态资源中间件
 const statcRoot = path.resolve(__dirname, '../public');

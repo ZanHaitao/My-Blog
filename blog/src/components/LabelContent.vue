@@ -2,7 +2,7 @@
     <div class="label">
         <div class="title">标签云</div>
         <ul>
-            <li v-for="item in labelData" :key="item.id">{{ item.title }}</li>
+            <router-link :to="{name:'filterArticleLabel',params:{id:item.id}}" tag="li" v-for="item in labelData" :key="item.id">{{ item.title }}</router-link>
         </ul>
     </div>
 </template>
@@ -25,6 +25,7 @@
         padding-bottom: 30px;
         overflow: hidden;
         padding-top: 10px;
+
         .title {
             color: #777;
             padding: 20px 10px 15px;
@@ -32,6 +33,7 @@
 
         ul {
             padding: 0 15px;
+
             li {
                 cursor: pointer;
                 float: left;

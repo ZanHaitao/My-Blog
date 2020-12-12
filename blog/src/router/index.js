@@ -18,6 +18,18 @@ const routes = [{
         path: 'articleDetail/:id',
         name: 'articleDetail',
         component: () => import('../view/index/articleDetail.vue')
+    },{
+        path: 'pageDetail/:id',
+        name: 'pageDetail',
+        component: () => import('../view/index/pageDetail.vue')
+    },{
+        path: 'filterArticleType/:id',
+        name: 'filterArticleType',
+        component: () => import('../view/index/filterArticleType.vue')
+    },{
+        path: 'filterArticleLabel/:id',
+        name: 'filterArticleLabel',
+        component: () => import('../view/index/filterArticleLabel.vue')
     }]
 }, {
     path: '/admin',

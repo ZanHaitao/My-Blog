@@ -5,16 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        loginUser:{}
+        loginUser: {},
+        loading: false
     },
     mutations: {
-        setLoginUser(state, payload){
+        setLoginUser(state, payload) {
             state.loginUser = payload;
+        },
+        setLoading(state, payload) {
+            state.loading = payload;
         }
     },
     actions: {
-        changeLoginUser({commit},payload){
-            commit('setLoginUser',payload);
+        changeLoginUser({ commit }, payload) {
+            commit('setLoginUser', payload);
+        },
+        changeLoading({ commit }, payload) {
+            commit('setLoading', payload);
         }
     },
 })
