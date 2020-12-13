@@ -83,7 +83,7 @@
 <style lang="scss">
     .publish-page {
         width: 1000px;
-        margin: 0 auto;
+        margin: 50px auto;
         padding-top: 40px;
 
         .tip {

@@ -63,7 +63,7 @@
                 if (result) {
                     this.sendMessage("删除成功！");
                     setTimeout(() => {
-                        window.location.reload();
+                        this.getData();
                     }, 3000)
                 } else {
                     this.sendMessage("删除失败！");
@@ -89,7 +89,7 @@
 <style lang="scss">
     .page-manage {
         width: 1000px;
-        margin: 50px auto 0;
+        margin: 100px auto 0;
 
         .tip {
             position: fixed;

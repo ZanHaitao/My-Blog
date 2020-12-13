@@ -9,7 +9,7 @@
                 <input v-model="loginId" placeholder="用户名" type="text">
             </p>
             <p class="login-input">
-                <input v-model="loginPwd" placeholder="密码" type="password">
+                <input v-model="loginPwd" placeholder="密码" type="password" @keydown.enter="handleLogin">
             </p>
             <p class="login-btn">
                 <button @click="handleLogin">登录</button>
@@ -59,7 +59,6 @@
                         this.message = "";
                     }, 3000)
                 }
-
             }
         },
     }
@@ -67,12 +66,12 @@
 
 <style lang="scss">
     .admin-login {
-        position: absolute;
-        left: 0;
+        position: fixed;
         top: 0;
+        left: 0;
         bottom: 0;
-        right: 0;
-        background: #F6F6F3;
+        width: 100%;
+        background: #EFEFEF;
 
         .tip {
             width: 100%;

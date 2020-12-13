@@ -151,7 +151,7 @@
 <style lang="scss">
     .admin-userInfo {
         width: 800px;
-        margin: 50px auto 0;
+        margin: 100px auto 0;
 
         .tip {
             position: fixed;

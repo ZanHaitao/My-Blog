@@ -71,7 +71,7 @@
                 if (result) {
                     this.sendMessage("回复成功！");
                     setTimeout(() => {
-                        window.location.reload();
+                        this.getData();
                     }, 3000)
                 } else {
                     this.sendMessage("回复失败！")
@@ -97,7 +97,7 @@
 <style lang="scss">
     .comment-manage {
         width: 1000px;
-        margin: 50px auto 0;
+        margin: 100px auto 0;
 
         .tip {
             position: fixed;

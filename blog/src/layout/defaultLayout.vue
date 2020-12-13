@@ -532,7 +532,7 @@
 
                 .left-content {
                     width: 100%;
-                    min-height: 500px;
+                    min-height: 900px;
                 }
 
                 .right-content {

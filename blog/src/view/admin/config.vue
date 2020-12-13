@@ -74,9 +74,6 @@
                     })
                     if (result) {
                         this.sendMessage("修改成功！");
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000);
                     } else {
                         this.sendMessage("修改失败，请检查后重新修改！")
                     }
@@ -99,7 +96,7 @@
 <style lang="scss">
     .admin-config {
         width: 800px;
-        margin: 50px auto 0;
+        margin: 100px auto 0;
 
         .tip {
             position: fixed;

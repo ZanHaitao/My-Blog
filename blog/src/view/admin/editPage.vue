@@ -1,7 +1,7 @@
 <template>
     <div class="publish-page">
         <div class="tip" v-show="showMessage">{{ message }}</div>
-        <div class="publish-page-title">创建新页面</div>
+        <div class="publish-page-title">编辑页面</div>
         <div class="publish-page-content">
             <text-content :title="title" :content="content" :cover="cover" @publishArticle="changePage" />
             <p class="page-name">
@@ -72,7 +72,7 @@
                     if (result) {
                         this.sendMessage("发布成功！");
                         setTimeout(() => {
-                            window.location.reload();
+                            this.$router.push('/admin/pageManage');
                         }, 3000)
                     } else {
                         this.sendMessage("发布失败，请检查后再提交！")
@@ -96,7 +96,7 @@
 <style lang="scss">
     .publish-page {
         width: 1000px;
-        margin: 0 auto;
+        margin: 50px auto;
         padding-top: 40px;
 
         .tip {

@@ -14,19 +14,19 @@ const routes = [{
         path: 'index',
         name: 'index',
         component: () => import('../view/index/index.vue')
-    },{
+    }, {
         path: 'articleDetail/:id',
         name: 'articleDetail',
         component: () => import('../view/index/articleDetail.vue')
-    },{
+    }, {
         path: 'pageDetail/:id',
         name: 'pageDetail',
         component: () => import('../view/index/pageDetail.vue')
-    },{
+    }, {
         path: 'filterArticleType/:id',
         name: 'filterArticleType',
         component: () => import('../view/index/filterArticleType.vue')
-    },{
+    }, {
         path: 'filterArticleLabel/:id',
         name: 'filterArticleLabel',
         component: () => import('../view/index/filterArticleLabel.vue')
@@ -97,7 +97,6 @@ const routes = [{
 
 const router = new VueRouter({
     mode: 'history',
-    base: process.env.BASE_URL,
     routes
 })
 

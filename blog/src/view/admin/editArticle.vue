@@ -102,7 +102,7 @@
                     if (result) {
                         this.sendMessage("发布成功！");
                         setTimeout(() => {
-                            window.location.reload();
+                            this.$router.push('/admin/articleManage');
                         }, 3000)
                     } else {
                         this.sendMessage("发布失败，请检查后再提交！")
@@ -127,7 +127,7 @@
 <style lang="scss">
     .publish-article {
         width: 1000px;
-        margin: 0 auto;
+        margin: 50px auto;
         padding-top: 40px;
 
         .tip {

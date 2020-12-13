@@ -105,7 +105,7 @@
                     this.sendMessage("添加成功！");
                     this.hideTip();
                     setTimeout(() => {
-                        window.location.reload();
+                        this.getData();
                     }, 3000)
                 } else {
                     this.sendMessage("添加失败！")
@@ -131,7 +131,7 @@
 <style lang="scss">
     .label-manage {
         width: 1000px;
-        margin: 50px auto 100px;
+        margin: 100px auto 100px;
 
         .tip {
             position: fixed;
